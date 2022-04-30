@@ -175,6 +175,16 @@ app.get('/app/flip/call/:guess(heads|tails)/', (req, res, next) => {
     const game = flipACoin(req.params.guess)
     res.status(200).json(game)
 })
+if (args.debug || args.d) {
+  app.get('/app/log/access/', (req, res, next) => {
+      const stmt = db.prepare("SELECT * FROM accesslog").all();
+    res.status(200).json(stmt);
+  })
+
+  app.get('/app/error/', (req, res, next) => {
+      throw new Error('Error test works.')
+  })
+}
 app.use(function(req, res){
   const statusCode = 404
   const statusMessage = 'NOT FOUND'
