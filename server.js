@@ -1,5 +1,4 @@
 // Require minimist module
-
 const args = require('minimist')(process.argv.slice(2))
 // See what is stored in the object produced by minimist
 //console.log('Command line arguments: ', args)
@@ -177,8 +176,10 @@ app.get('/app/flip/call/:guess(heads|tails)/', (req, res, next) => {
     res.status(200).json(game)
 })
 app.use(function(req, res){
-    res.status(404).send('404 NOT FOUND')
-})
+  const statusCode = 404
+  const statusMessage = 'NOT FOUND'
+  res.status(statusCode).end(statusCode+ ' ' +statusMessage)
+});
 process.on('SIGINT', () => {
     server.close(() => {
 		console.log('\nApp stopped.');
